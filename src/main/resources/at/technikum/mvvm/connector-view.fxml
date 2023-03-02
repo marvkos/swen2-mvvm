@@ -18,4 +18,6 @@
 
     <Label fx:id="output" />
 
+    <ListView fx:id="words" />
+
 </VBox>

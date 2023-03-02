@@ -1,7 +1,11 @@
 package at.technikum.mvvm.viewmodel;
 
+import at.technikum.mvvm.event.NewWordEvent;
+import at.technikum.mvvm.model.WordRepository;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class ConnectorViewModel {
 
@@ -9,8 +13,25 @@ public class ConnectorViewModel {
     private final StringProperty string2 = new SimpleStringProperty("");
     private final StringProperty output = new SimpleStringProperty("");
 
+    private final ObservableList<String> words = FXCollections.observableArrayList();
+
+    private final WordRepository wordRepository = new WordRepository();
+
+    public ConnectorViewModel() {
+        words.addAll(wordRepository.findAll());
+
+        wordRepository.addNewWordListener(this::addNewWord);
+    }
+
+    private void addNewWord(String word) {
+        words.add(word);
+    }
+
     public void connect() {
-        output.set(string1.get() + " " + string2.get());
+        String word = string1.get() + " " + string2.get();
+        wordRepository.save(word);
+
+        output.set(word);
 
         string1.set("");
         string2.set("");
@@ -50,5 +71,9 @@ public class ConnectorViewModel {
 
     public void setOutput(String output) {
         this.output.set(output);
+    }
+
+    public ObservableList<String> getWords() {
+        return words;
     }
 }
