@@ -17,10 +17,11 @@ public class ConnectorView {
     @FXML
     private Label output;
 
-    @FXML
-    private ListView<String> words;
+    private final ConnectorViewModel connectorViewModel;
 
-    private final ConnectorViewModel connectorViewModel = new ConnectorViewModel();
+    public ConnectorView(ConnectorViewModel connectorViewModel) {
+        this.connectorViewModel = connectorViewModel;
+    }
 
     @FXML
     void initialize() {
@@ -30,7 +31,6 @@ public class ConnectorView {
                 .bindBidirectional(connectorViewModel.string2Property());
         output.textProperty()
                 .bind(connectorViewModel.outputProperty());
-        words.setItems(connectorViewModel.getWords());
     }
 
     @FXML

@@ -17,7 +17,4 @@
     <Button text="connect" onAction="#connect" />
 
     <Label fx:id="output" />
-
-    <ListView fx:id="words" />
-
 </VBox>

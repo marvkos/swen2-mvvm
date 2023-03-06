@@ -13,18 +13,10 @@ public class ConnectorViewModel {
     private final StringProperty string2 = new SimpleStringProperty("");
     private final StringProperty output = new SimpleStringProperty("");
 
-    private final ObservableList<String> words = FXCollections.observableArrayList();
+    private final WordRepository wordRepository;
 
-    private final WordRepository wordRepository = new WordRepository();
-
-    public ConnectorViewModel() {
-        words.addAll(wordRepository.findAll());
-
-        wordRepository.addNewWordListener(this::addNewWord);
-    }
-
-    private void addNewWord(String word) {
-        words.add(word);
+    public ConnectorViewModel(WordRepository wordRepository) {
+        this.wordRepository = wordRepository;
     }
 
     public void connect() {
@@ -73,7 +65,5 @@ public class ConnectorViewModel {
         this.output.set(output);
     }
 
-    public ObservableList<String> getWords() {
-        return words;
-    }
+
 }
