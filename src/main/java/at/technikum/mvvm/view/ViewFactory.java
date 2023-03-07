@@ -1,5 +1,6 @@
 package at.technikum.mvvm.view;
 
+import at.technikum.mvvm.event.EventAggregator;
 import at.technikum.mvvm.model.WordRepository;
 import at.technikum.mvvm.viewmodel.ConnectorViewModel;
 import at.technikum.mvvm.viewmodel.WordListViewModel;
@@ -8,14 +9,16 @@ public class ViewFactory {
 
     private static ViewFactory instance;
 
+    private final EventAggregator eventAggregator;
     private final WordRepository wordRepository;
     private final ConnectorViewModel connectorViewModel;
     private final WordListViewModel wordListViewModel;
 
     private ViewFactory() {
-        wordRepository = new WordRepository();
+        eventAggregator = new EventAggregator();
+        wordRepository = new WordRepository(eventAggregator);
         connectorViewModel = new ConnectorViewModel(wordRepository);
-        wordListViewModel = new WordListViewModel(wordRepository);
+        wordListViewModel = new WordListViewModel(eventAggregator, wordRepository);
     }
 
     public Object create(Class<?> viewClass) {

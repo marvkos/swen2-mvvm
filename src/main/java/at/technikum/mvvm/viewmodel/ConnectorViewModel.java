@@ -1,11 +1,8 @@
 package at.technikum.mvvm.viewmodel;
 
-import at.technikum.mvvm.event.NewWordEvent;
 import at.technikum.mvvm.model.WordRepository;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 public class ConnectorViewModel {
 

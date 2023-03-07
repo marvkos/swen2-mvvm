@@ -1,6 +1,7 @@
 package at.technikum.mvvm.model;
 
-import at.technikum.mvvm.event.NewWordEvent;
+import at.technikum.mvvm.event.Event;
+import at.technikum.mvvm.event.EventAggregator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,27 +10,18 @@ public class WordRepository {
 
     private final List<String> words;
 
-    private final List<NewWordEvent> newWordEvents;
+    private final EventAggregator eventAggregator;
 
-    public WordRepository() {
+    public WordRepository(EventAggregator eventAggregator) {
+        this.eventAggregator = eventAggregator;
         words = new ArrayList<>();
-        newWordEvents = new ArrayList<>();
     }
 
-    private void notifyNewWordListeners(String word) {
-        for (NewWordEvent nwe: newWordEvents) {
-            nwe.newWord(word);
-        }
-    }
-
-    public void addNewWordListener(NewWordEvent newWordEvent) {
-        newWordEvents.add(newWordEvent);
-    }
 
     public void save(String word) {
         words.add(word);
 
-        notifyNewWordListeners(word);
+        eventAggregator.publish(Event.NEW_WORD);
     }
 
     public List<String> findAll() {

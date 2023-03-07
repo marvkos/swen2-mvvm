@@ -1,20 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="at.technikum.mvvm.view.ConnectorView"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.technikum.mvvm.view.ConnectorView">
 
     <TextField fx:id="textField1" promptText="String 1" />
     <TextField fx:id="textField2" promptText="String 2" />
 
-    <Button text="connect" onAction="#connect" />
+    <Button onAction="#connect" text="%connect_button" />
 
     <Label fx:id="output" />
 </VBox>
