@@ -1,0 +1,9 @@
+@startuml
+
+App -> Exporter : exportSummary()
+Exporter -> TourRepository : findAll()
+TourRepository --> Exporter
+Exporter -> Exporter : createPdf()
+Exporter --> App
+
+@enduml

@@ -1,0 +1,16 @@
+@startuml
+
+class Tour {
+    -name: String
+    -start: String
+    -end: String
+}
+
+class Log {
+    -date: Date
+    -rating: int
+}
+
+Tour "1" -- "*" Log
+
+@enduml

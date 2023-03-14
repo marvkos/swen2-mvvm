@@ -1,0 +1,10 @@
+@startuml
+left to right direction
+actor "User" as u
+rectangle "Tour App" {
+  usecase "Add Tours" as UC1
+  usecase "Export Summary PDF" as UC2
+}
+u -- UC1
+u -- UC2
+@enduml
