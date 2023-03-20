@@ -2,6 +2,7 @@ package at.technikum.mvvm.viewmodel;
 
 import at.technikum.mvvm.event.EventAggregator;
 import at.technikum.mvvm.model.WordRepository;
+import at.technikum.mvvm.service.WordService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
@@ -16,7 +17,7 @@ import static org.mockito.Mockito.*;
 public class WordListViewModelTest {
 
     EventAggregator eventAggregator;
-    WordRepository wordRepository;
+    WordService wordService;
 
     WordListViewModel wordListViewModel;
 
@@ -24,16 +25,16 @@ public class WordListViewModelTest {
     public void initialWordListTest() {
         // Arrange
         eventAggregator = mock(EventAggregator.class);
-        wordRepository = mock(WordRepository.class);
+        wordService = mock(WordService.class);
 
         List<String> words = new ArrayList<>();
         words.add("Hello World");
 
-        when(wordRepository.findAll()).thenReturn(words);
+        when(wordService.findAll()).thenReturn(words);
 
         // Act
         wordListViewModel = new WordListViewModel(
-                eventAggregator, wordRepository
+                eventAggregator, wordService
         );
 
         // Assert
