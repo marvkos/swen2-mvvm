@@ -1,0 +1,30 @@
+@startuml
+left to right direction
+
+actor User
+
+package UI {
+    component View
+
+    component ViewModel
+}
+
+package Business {
+    component Service
+}
+
+package Data {
+
+    component Model
+
+    component Repository
+}
+
+User --> View
+View <--> ViewModel
+
+ViewModel --> Service
+
+Service --> Repository
+
+@enduml

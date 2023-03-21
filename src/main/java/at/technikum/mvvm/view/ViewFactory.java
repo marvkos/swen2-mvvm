@@ -21,7 +21,7 @@ public class ViewFactory {
         eventAggregator = new EventAggregator();
         wordRepository = new WordRepository(eventAggregator);
         wordService = new WordService(wordRepository);
-        connectorViewModel = new ConnectorViewModel(wordRepository);
+        connectorViewModel = new ConnectorViewModel(wordService);
         wordListViewModel = new WordListViewModel(eventAggregator, wordService);
     }
 

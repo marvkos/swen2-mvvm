@@ -1,6 +1,7 @@
 package at.technikum.mvvm.viewmodel;
 
 import at.technikum.mvvm.model.WordRepository;
+import at.technikum.mvvm.service.WordService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -10,15 +11,15 @@ public class ConnectorViewModel {
     private final StringProperty string2 = new SimpleStringProperty("");
     private final StringProperty output = new SimpleStringProperty("");
 
-    private final WordRepository wordRepository;
+    private final WordService wordService;
 
-    public ConnectorViewModel(WordRepository wordRepository) {
-        this.wordRepository = wordRepository;
+    public ConnectorViewModel(WordService wordService) {
+        this.wordService = wordService;
     }
 
     public void connect() {
         String word = string1.get() + " " + string2.get();
-        wordRepository.save(word);
+        wordService.save(word);
 
         output.set(word);
 
