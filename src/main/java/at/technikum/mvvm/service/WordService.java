@@ -1,8 +1,10 @@
 package at.technikum.mvvm.service;
 
-import at.technikum.mvvm.model.WordRepository;
+import at.technikum.mvvm.model.Word;
+import at.technikum.mvvm.repository.WordRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class WordService {
 
@@ -13,10 +15,13 @@ public class WordService {
     }
 
     public void save(String word) {
-        wordRepository.save(word);
+        wordRepository.save(new Word(word));
     }
 
     public List<String> findAll() {
-        return wordRepository.findAll();
+        return wordRepository.findAll()
+                .stream()
+                .map(Word::getValue)
+                .collect(Collectors.toList());
     }
 }

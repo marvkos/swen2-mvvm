@@ -1,6 +1,5 @@
 package at.technikum.mvvm.viewmodel;
 
-import at.technikum.mvvm.model.WordRepository;
 import at.technikum.mvvm.service.WordService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

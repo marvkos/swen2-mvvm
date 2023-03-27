@@ -1,7 +1,8 @@
 package at.technikum.mvvm.view;
 
+import at.technikum.mvvm.data.HibernateSessionFactory;
 import at.technikum.mvvm.event.EventAggregator;
-import at.technikum.mvvm.model.WordRepository;
+import at.technikum.mvvm.repository.WordRepository;
 import at.technikum.mvvm.service.WordService;
 import at.technikum.mvvm.viewmodel.ConnectorViewModel;
 import at.technikum.mvvm.viewmodel.WordListViewModel;
@@ -11,6 +12,9 @@ public class ViewFactory {
     private static ViewFactory instance;
 
     private final EventAggregator eventAggregator;
+
+    private final HibernateSessionFactory sessionFactory;
+
     private final WordRepository wordRepository;
 
     private final WordService wordService;
@@ -19,7 +23,8 @@ public class ViewFactory {
 
     private ViewFactory() {
         eventAggregator = new EventAggregator();
-        wordRepository = new WordRepository(eventAggregator);
+        sessionFactory = new HibernateSessionFactory();
+        wordRepository = new WordRepository(sessionFactory, eventAggregator);
         wordService = new WordService(wordRepository);
         connectorViewModel = new ConnectorViewModel(wordService);
         wordListViewModel = new WordListViewModel(eventAggregator, wordService);

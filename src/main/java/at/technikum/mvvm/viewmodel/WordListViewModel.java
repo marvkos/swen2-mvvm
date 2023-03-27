@@ -2,7 +2,6 @@ package at.technikum.mvvm.viewmodel;
 
 import at.technikum.mvvm.event.Event;
 import at.technikum.mvvm.event.EventAggregator;
-import at.technikum.mvvm.model.WordRepository;
 import at.technikum.mvvm.service.WordService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
