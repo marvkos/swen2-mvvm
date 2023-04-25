@@ -3,6 +3,8 @@ package at.technikum.mvvm.view;
 import at.technikum.mvvm.data.HibernateSessionFactory;
 import at.technikum.mvvm.event.EventAggregator;
 import at.technikum.mvvm.repository.WordRepository;
+import at.technikum.mvvm.service.MapQuestRouteService;
+import at.technikum.mvvm.service.RouteService;
 import at.technikum.mvvm.service.WordService;
 import at.technikum.mvvm.viewmodel.ConnectorViewModel;
 import at.technikum.mvvm.viewmodel.WordListViewModel;
@@ -17,6 +19,8 @@ public class ViewFactory {
 
     private final WordRepository wordRepository;
 
+    private final RouteService routeService;
+
     private final WordService wordService;
     private final ConnectorViewModel connectorViewModel;
     private final WordListViewModel wordListViewModel;
@@ -26,7 +30,8 @@ public class ViewFactory {
         sessionFactory = new HibernateSessionFactory();
         wordRepository = new WordRepository(sessionFactory, eventAggregator);
         wordService = new WordService(wordRepository);
-        connectorViewModel = new ConnectorViewModel(wordService);
+        routeService = new MapQuestRouteService();
+        connectorViewModel = new ConnectorViewModel(routeService, wordService);
         wordListViewModel = new WordListViewModel(eventAggregator, wordService);
     }
 

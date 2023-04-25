@@ -1,6 +1,8 @@
 package at.technikum.mvvm.viewmodel;
 
 import at.technikum.mvvm.dto.MapQuestApiResponse;
+import at.technikum.mvvm.dto.Route;
+import at.technikum.mvvm.service.RouteService;
 import at.technikum.mvvm.service.WordService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -21,67 +23,30 @@ public class ConnectorViewModel {
     private final StringProperty string2 = new SimpleStringProperty("");
     private final StringProperty output = new SimpleStringProperty("");
 
+    private final RouteService routeService;
     private final WordService wordService;
 
-    public ConnectorViewModel(WordService wordService) {
+    public ConnectorViewModel(
+            RouteService routeService,
+            WordService wordService
+    ) {
+        this.routeService = routeService;
         this.wordService = wordService;
     }
 
     public void connect() {
-        String key = "YOUR_KEY";
         String from = string1.get();
         String to = string2.get();
 
-        String uri = "https://www.mapquestapi.com/directions/v2/route?";
-        uri += "key=" + key;
-        uri += "&from=" + from;
-        uri += "&to=" + to;
-        uri += "&unit=k";
-        uri += "&transportMode=WALKING";
+        Route route = routeService.getRoute(from, to);
 
-        String responseJson = "";
+        routeService.saveMap(route.getSessionId(), "map.jpg");
 
-        try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI(uri))
-                    .GET()
-                    .build();
-
-            HttpClient client = HttpClient.newHttpClient();
-
-            HttpResponse<String> response = client.send(
-                    request,
-                    HttpResponse.BodyHandlers.ofString()
-            );
-
-            responseJson = response.body();
-
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
-        ObjectMapper mapper = new ObjectMapper()
-                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
-        String information = "From " + from + " to " + to + ": ";
-
-        try {
-            MapQuestApiResponse apiResponse = mapper.readValue(
-                    responseJson,
-                    MapQuestApiResponse.class
-            );
-
-            information += apiResponse.getRoute().getDistance();
-            information += " Time: " + apiResponse.getRoute().getFormattedTime();
-
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-
+        String information = "From "
+                + from + " to "
+                + to + " in "
+                + route.getFormattedTime()
+                + " (" + route.getDistance() + ")";
 
         wordService.save(information);
 
